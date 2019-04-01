@@ -51,89 +51,34 @@
 	</div>
 </template>
 <script type="text/javascript">
+import axios from 'axios'
 export default{
 	name:'Index',
   data(){
     return{
-         boardList: [
-        {
-          title: '开放产品',
-          description: '开放产品是一款开放产品',
-          id: 'car',
-          toKey: 'analysis',
-          saleout: false
-        },
-        {
-          title: '品牌营销',
-          description: '品牌营销帮助你的产品更好地找到定位',
-          id: 'earth',
-          toKey: 'count',
-          saleout: false
-        },
-        {
-          title: '使命必达',
-          description: '使命必达快速迭代永远保持最前端的速度',
-          id: 'loud',
-          toKey: 'forecast',
-          saleout: true
-        },
-        {
-          title: '勇攀高峰',
-          description: '帮你勇闯高峰，到达事业的顶峰',
-          id: 'hill',
-          toKey: 'publish',
-          saleout: false
-        }
-      ],
+        boardList:[],
+        productList:''
+    }
+  },
+  methods:{
+    getIndexInfo(){
+      axios.get('/api/index.json').then(this.getIndexInfoSucc);
+    },
+    getIndexInfoSucc(res){
+      res=res.data;
+      if(res.ret&&res.data){
+        const data=res.data
+        this.boardList=data.boardList
+        this.productList=data.productList
+     
 
-        productList: {
-        pc: {
-          title: 'PC产品',
-          list: [
-            {
-              name: '数据统计',
-              url: 'http://starcraft.com'
-            },
-            {
-              name: '数据预测',
-              url: 'http://warcraft.com'
-            },
-            {
-              name: '流量分析',
-              url: 'http://overwatch.com',
-              hot: true
-            },
-            {
-              name: '广告发布',
-              url: 'http://hearstone.com'
-            }
-          ]
-        },
-        app: {
-          title: '手机应用类',
-          last: true,
-          list: [
-            {
-              name: '91助手',
-              url: 'http://weixin.com'
-            },
-            {
-              name: '产品助手',
-              url: 'http://twitter.com',
-              hot: true
-            },
-            {
-              name: '智能地图',
-              url: 'http://maps.com'
-            },
-            {
-              name: '团队语音',
-              url: 'http://phone.com'
-            }
-          ]
-        }
       }
     }
+
+
+  },
+  mounted(){
+    this.getIndexInfo();
   }
 }
 </script>
